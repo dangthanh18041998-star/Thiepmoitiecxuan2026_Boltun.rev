@@ -350,7 +350,7 @@
                 <div id="successMessage" class="success-message">
                     <i class="fas fa-check-circle mr-2"></i>
                     <strong>Đăng ký thành công!</strong><br>
-                    Thông tin đã được lưu vào hệ thống.
+                    Cảm ơn bạn đã xác nhận! Chúc bạn một năm mới an khang thịnh vượng! 🎉🧧
                 </div>
                 
                 <div id="loadingSpinner" class="loading-spinner"></div>
@@ -761,7 +761,7 @@
                     successMessage.style.display = 'block';
                     
                     // Đổi nút RSVP
-                    rsvpBtn.innerHTML = `<span>ĐÃ ĐĂNG KÝ</span><span>(${maNV})</span><span>已注册</span>`;
+                    rsvpBtn.innerHTML = `<span>ĐÃ XÁC NHẬN</span><span>已确认！</span>`;
                     rsvpBtn.classList.remove('pulse');
                     rsvpBtn.classList.remove('bg-gradient-to-r', 'from-red-600', 'to-red-700');
                     rsvpBtn.classList.add('bg-gradient-to-r', 'from-green-500', 'to-green-600');
@@ -769,10 +769,10 @@
                     // Hiệu ứng
                     createConfetti();
                     
-                    // Tự đóng popup sau 2s
+                    // Tự đóng popup sau 5s
                     setTimeout(() => {
                         closePopup();
-                    }, 2000);
+                    }, 5000);
                     
                 } catch (error) {
                     alert('Lỗi đăng ký: ' + error.message + '\nVui lòng thử lại!');

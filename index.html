@@ -731,60 +731,65 @@
             updateRealCountdown();
             setInterval(updateRealCountdown, 60000);
             
-            // Xử lý form submit
-            document.getElementById('registerForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const maNV = document.getElementById('maNV').value.trim();
-                const hoTen = document.getElementById('hoTen').value.trim();
-                const submitBtn = this.querySelector('.btn-submit');
-                const loadingSpinner = document.getElementById('loadingSpinner');
-                const successMessage = document.getElementById('successMessage');
-                
-                // Validate
-                if (!maNV || !hoTen) {
-                    alert('Vui lòng nhập đầy đủ thông tin!');
-                    return;
-                }
-                
-                // Hiện loading
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang xử lý...';
-                loadingSpinner.style.display = 'block';
-                successMessage.style.display = 'none';
-                
-                try {
-                    // Gửi đến Google Apps Script
-                    await submitToGoogleSheet(maNV, hoTen);
-                    
-                    // Thành công
-                    successMessage.style.display = 'block';
-                    
-                    // Đổi nút RSVP
-                    rsvpBtn.innerHTML = `<span>ĐÃ XÁC NHẬN</span><span>已确认！</span>`;
-                    rsvpBtn.classList.remove('pulse');
-                    rsvpBtn.classList.remove('bg-gradient-to-r', 'from-red-600', 'to-red-700');
-                    rsvpBtn.classList.add('bg-gradient-to-r', 'from-green-500', 'to-green-600');
-                    
-                    // Hiệu ứng
-                    createConfetti();
-                    
-                    // Tự đóng popup sau 5s
-                    setTimeout(() => {
-                        closePopup();
-                    }, 5000);
-                    
-                } catch (error) {
-                    alert('Lỗi đăng ký: ' + error.message + '\nVui lòng thử lại!');
-                    console.error('Registration error:', error);
-                } finally {
-                    // Reset button
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Gửi đăng ký';
-                    loadingSpinner.style.display = 'none';
-                }
-            });
-        });
+          // Xử lý form submit
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const maNV = document.getElementById('maNV').value.trim();
+    const hoTen = document.getElementById('hoTen').value.trim();
+    const submitBtn = this.querySelector('.btn-submit');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const successMessage = document.getElementById('successMessage');
+    
+    // Validate
+    if (!maNV || !hoTen) {
+        alert('Vui lòng nhập đầy đủ thông tin!');
+        return;
+    }
+    
+    // Hiện loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang xử lý...';
+    loadingSpinner.style.display = 'block';
+    successMessage.style.display = 'none';
+    
+    try {
+        // Gửi đến Google Apps Script
+        await submitToGoogleSheet(maNV, hoTen);
+        
+        // Thành công
+        successMessage.style.display = 'block';
+        
+        // SỬA ĐOẠN NÀY: Đổi nút RSVP - KHÔNG HIỆN MÃ NV
+        rsvpBtn.innerHTML = `
+            <div class="flex flex-col items-center">
+                <span class="font-bold text-white">🎉 ĐÃ ĐĂNG KÝ</span>
+                <span class="text-white/90 text-sm">报名成功</span>
+            </div>
+        `;
+        rsvpBtn.classList.remove('pulse');
+        rsvpBtn.classList.remove('bg-gradient-to-r', 'from-red-600', 'to-red-700');
+        rsvpBtn.classList.add('bg-gradient-to-r', 'from-green-500', 'to-green-600');
+        rsvpBtn.disabled = true;
+        
+        // Hiệu ứng
+        createConfetti();
+        
+        // Tự đóng popup sau 2s
+        setTimeout(() => {
+            closePopup();
+        }, 2000);
+        
+    } catch (error) {
+        alert('Lỗi đăng ký: ' + error.message + '\nVui lòng thử lại!');
+        console.error('Registration error:', error);
+    } finally {
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Gửi đăng ký';
+        loadingSpinner.style.display = 'none';
+    }
+});
         
         // ==================== HÀM TOÀN CỤC ====================
         

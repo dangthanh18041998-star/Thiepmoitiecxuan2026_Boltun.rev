@@ -775,10 +775,10 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         // Hiệu ứng
         createConfetti();
         
-        // Tự đóng popup sau 2s
+        // Tự đóng popup sau 1s
         setTimeout(() => {
             closePopup();
-        }, 2000);
+        }, 1000);
         
     } catch (error) {
         alert('Lỗi đăng ký: ' + error.message + '\nVui lòng thử lại!');
